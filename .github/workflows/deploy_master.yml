@@ -24,6 +24,11 @@ jobs:
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         run: |
+          # Créer le répertoire .ssh s'il n'existe pas
+          mkdir -p ~/.ssh
+          # Créer un fichier known_hosts vide pour éviter l'erreur
+          touch ~/.ssh/known_hosts
+          # Ajouter la clé privée
           echo "$SSH_PRIVATE_KEY" > /tmp/id_rsa
           chmod 600 /tmp/id_rsa
           eval "$(ssh-agent -s)"
