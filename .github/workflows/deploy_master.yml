@@ -26,14 +26,17 @@ jobs:
         run: |
           # Créer le répertoire .ssh s'il n'existe pas
           mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
           # Créer un fichier known_hosts vide pour éviter l'erreur
           touch ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/known_hosts
           # Ajouter la clé privée
           echo "$SSH_PRIVATE_KEY" > /tmp/id_rsa
           chmod 600 /tmp/id_rsa
           eval "$(ssh-agent -s)"
           ssh-add /tmp/id_rsa
-          ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
+          # Ajouter l'hôte au fichier known_hosts
+          ssh-keyscan -p ${{ secrets.SSH_PORT }} -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
 
       # Étape 3 : Mettre à jour la production
       - name: 3 - Mettre à jour la production
