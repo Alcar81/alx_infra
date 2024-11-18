@@ -1,4 +1,5 @@
-name: Déployer sur Production
+# /home/alxmultimedia.com/.github/workflows/deploy_master.yml
+name: Mettre à jour la production (master)
 
 on:
   push:
@@ -6,44 +7,39 @@ on:
       - master
 
 jobs:
-  deploy:
+  update-production:
     runs-on: ubuntu-latest
 
     env:
       SSH_USER: ${{ secrets.SSH_USER }}
       SERVER_IP: ${{ secrets.SERVER_IP }}
       SSH_PORT: ${{ secrets.SSH_PORT }}
+      DEPLOY_DIRECTORY: /home/alxmultimedia.com/backend
 
     steps:
-      # Étape 1 : Récupérer le code
+      # Étape 1 : Checkout du dépôt
       - name: 1 - Checkout repository
         uses: actions/checkout@v3
 
-      # Étape 2 : Configurer l'accès SSH
+      # Étape 2 : Configurer SSH
       - name: 2 - Configure SSH
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         run: |
-          # Créer le répertoire .ssh s'il n'existe pas
           mkdir -p ~/.ssh
           chmod 700 ~/.ssh
-          # Créer un fichier known_hosts vide pour éviter l'erreur
           touch ~/.ssh/known_hosts
           chmod 600 ~/.ssh/known_hosts
-          # Ajouter la clé privée
           echo "$SSH_PRIVATE_KEY" > /tmp/id_rsa
           chmod 600 /tmp/id_rsa
           eval "$(ssh-agent -s)"
           ssh-add /tmp/id_rsa
-          # Ajouter l'hôte au fichier known_hosts
           ssh-keyscan -p ${{ secrets.SSH_PORT }} -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
 
       # Étape 3 : Mettre à jour la production
       - name: 3 - Mettre à jour la production
         run: |
-          ssh -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} "
-            cd /home/alxmultimedia.com/backend &&
-            git pull origin master &&
-            docker-compose down &&
-            docker-compose up -d
+          ssh -o StrictHostKeyChecking=no -o IdentitiesOnly=yes -i /tmp/id_rsa -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@$SERVER_IP "
+            cd $DEPLOY_DIRECTORY &&
+            git pull origin master
           "
