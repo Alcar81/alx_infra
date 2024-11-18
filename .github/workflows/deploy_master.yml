@@ -1,0 +1,41 @@
+name: Déployer sur Production
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    env:
+      SSH_USER: ${{ secrets.SSH_USER }}
+      SERVER_IP: ${{ secrets.SERVER_IP }}
+      SSH_PORT: ${{ secrets.SSH_PORT }}
+
+    steps:
+      # Étape 1 : Récupérer le code
+      - name: 1 - Checkout repository
+        uses: actions/checkout@v3
+
+      # Étape 2 : Configurer l'accès SSH
+      - name: 2 - Configure SSH
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        run: |
+          echo "$SSH_PRIVATE_KEY" > /tmp/id_rsa
+          chmod 600 /tmp/id_rsa
+          eval "$(ssh-agent -s)"
+          ssh-add /tmp/id_rsa
+          ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
+
+      # Étape 3 : Mettre à jour la production
+      - name: 3 - Mettre à jour la production
+        run: |
+          ssh -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} "
+            cd /home/alxmultimedia.com/backend &&
+            git pull origin master &&
+            docker-compose down &&
+            docker-compose up -d
+          "
