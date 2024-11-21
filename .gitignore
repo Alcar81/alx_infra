@@ -17,4 +17,8 @@ node_modules/
 *.pub
 logs/
 .ssh
+<<<<<<< HEAD
 .trash
+=======
+.trash
+>>>>>>> a98479a5fba57a00e6b0054138b32b55aadee8ce
