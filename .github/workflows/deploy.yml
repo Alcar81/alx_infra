@@ -10,16 +10,19 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
+    # Étape 1 - Checkout Code
     steps:
-    - name: Checkout Code
+    - name: 1 -Checkout Code
       uses: actions/checkout@v3
 
-    - name: Deploy to dev
+    # Étape 2 - Deploy to dev 
+    - name: 2 -Deploy to dev
       if: github.ref == 'refs/heads/dev'
       run: |
         rsync -avz --delete ./ ${{ vars.DEPLOY_DIRECTORY }}
 
-    - name: Deploy to prod
+    # Étape 3 - Deploy to prod
+    - name: 3 - Deploy to prod
       if: github.ref == 'refs/heads/master'
       run: |
         rsync -avz --delete ./ ${{ vars.DEPLOY_DIRECTORY }}
