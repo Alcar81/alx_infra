@@ -27,3 +27,9 @@ backend/
 # Ignorer les fichiers de build générés
 public_html/build/
 *.map
+
+/public_html/build/asset-manifest.json
+/public_html/build/index.html
+/public_html/build/static/js/main.9941bbaa.js
+/public_html/build/static/js/main.9941bbaa.js.LICENSE.txt
+/public_html/build/static/js/main.9941bbaa.js.map
