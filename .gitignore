@@ -10,15 +10,20 @@ logs/*.error_log
 backend/.git
 frontend/.git
 
-# Ignorer les fichiers compilés, caches et autres éléments temporaires
+# Ignorer les fichiers compilés, caches et autres éléments temporaire
 node_modules/
 .DS_Store
 *.log
 *.pub
 logs/
 .ssh
-<<<<<<< HEAD
+mail.dev.alxmultimedia.com
+
 .trash
-=======
-.trash
->>>>>>> a98479a5fba57a00e6b0054138b32b55aadee8ce
+# Ignorer les répertoires frontend et backend
+frontend/
+backend/
+
+# Ignorer les fichiers de build générés
+public_html/build/
+*.map
