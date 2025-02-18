@@ -22,7 +22,7 @@ RewriteLogLevel 2
     # Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'nonce-randomstring'; style-src 'self' 'nonce-randomstring'; img-src 'self'; font-src 'self';"
 
     # 🔥 Correction Permissions-Policy
-    Header always set Permissions-Policy "geolocation=(), microphone=(), camera=(), fullscreen=()"
+    Header always set Permissions-Policy "geolocation=(self); microphone=(self); camera=(self); fullscreen=(self)"
 
     # Forcer l'utilisation de HTTPS avec HSTS
     Header always unset Strict-Transport-Security
