@@ -17,17 +17,15 @@ RewriteLogLevel 2
     # Politique de Référent stricte
     Header always set Referrer-Policy "strict-origin-when-cross-origin"
 
-    # 🔥 Correction CSP - Évite d'écraser la version de Helmet dans server.js
-    # (Il est préférable de définir le CSP côté backend, donc on désactive ici)
-    # Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'nonce-randomstring'; style-src 'self' 'nonce-randomstring'; img-src 'self'; font-src 'self';"
+    # ❌ Supprimer la ligne CSP ici car géré côté backend
+    # Header always set Content-Security-Policy "default-src 'self'; script-src 'self';"
 
-    # 🔥 Correction Permissions-Policy
-    Header always set Permissions-Policy "geolocation=(self); microphone=(self); camera=(self); fullscreen=(self)"
+    # ✅ Correction Permissions-Policy
+    Header always set Permissions-Policy "geolocation=(self), microphone=(self), camera=(self), fullscreen=(self)"
 
     # Forcer l'utilisation de HTTPS avec HSTS
     Header always unset Strict-Transport-Security
     Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
-
 </IfModule>
 
 # 🔄 Force la redirection vers HTTPS et supprime www
