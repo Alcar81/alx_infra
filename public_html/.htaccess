@@ -15,10 +15,7 @@ RewriteLogLevel 2
     Header always set X-Content-Type-Options "nosniff"
 
     # Politique de Référent stricte
-    Header always set Referrer-Policy "strict-origin-when-cross-origin"
-
-    # ❌ Supprimer la ligne CSP ici car géré côté backend
-    # Header always set Content-Security-Policy "default-src 'self'; script-src 'self';"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"   
 
     # ✅ Correction Permissions-Policy
     Header always set Permissions-Policy "geolocation=(self), microphone=(self), camera=(self), fullscreen=(self)"
