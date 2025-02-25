@@ -34,3 +34,6 @@ public_html/
 
 # ✅ Ignorer les scripts de déploiement spécifiques
 deploy_infra.sh
+
+# ✅ Ignorer les fichiers de configuration de PHP
+node_modules/
