@@ -17,23 +17,20 @@ backend/.git/
 frontend/.git/
 
 # ✅ Ignorer les sauvegardes de la base de données
-/backup_bd/
+backup_bd/
 
 # ✅ Ignorer les caches et fichiers système inutiles
 node_modules/
 .DS_Store  # MacOS
 .trash/
+.cache/
 
 # ✅ Ignorer les dossiers frontend et backend
-frontend/
 backend/
+frontend/
 
 # ✅ Ignorer les fichiers de build générés
 public_html/
 
 # ✅ Ignorer les scripts de déploiement spécifiques
 deploy_infra.sh
-
-# ✅ Ignorer les fichiers cachés inutiles
-.cache/
-
