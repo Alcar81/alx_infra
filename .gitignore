@@ -1,0 +1,42 @@
+# ✅ Ignorer les logs du serveur
+logs/
+logs/*.access_log
+logs/*.error_log
+*.log
+
+# ✅ Ignorer les fichiers de configuration sensibles
+.env
+*.env.local
+
+# ✅ Ignorer les fichiers et clés SSH
+.ssh/
+*.pub
+
+# ✅ Ignorer les fichiers et répertoires liés à Git dans les sous-modules
+backend/.git/
+frontend/.git/
+
+# ✅ Ignorer les sauvegardes de la base de données
+backup_bd/
+
+# ✅ Ignorer les caches et fichiers système inutiles
+node_modules/
+.DS_Store  # MacOS
+.trash/
+.cache/
+
+# ✅ Ignorer les dossiers frontend et backend
+backend/
+frontend/
+
+# ✅ Ignorer les fichiers de build générés
+public_html/build
+public_html/index.html
+!public_html/.htaccess
+!public_html/robots.txt
+
+# ✅ Ignorer les scripts de déploiement spécifiques
+deploy_infra.sh
+
+# ✅ Ignorer les fichiers de configuration de PHP
+node_modules/
