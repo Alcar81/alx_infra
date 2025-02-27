@@ -6,6 +6,11 @@ RewriteEngine On
 # Logs simplifiés pour le débogage si nécessaire
 RewriteLogLevel 2
 
+# Assure-toi que toutes les requêtes statiques passent bien par Express
+RewriteCond %{REQUEST_URI} ^/static/ [NC]
+RewriteCond %{DOCUMENT_ROOT}/public_html/build%{REQUEST_URI} !-f
+RewriteRule .* http://127.0.0.1:7000%{REQUEST_URI} [P]
+
 # 🔄 Force la redirection vers HTTPS et supprime www
 RewriteCond %{HTTPS} !=on [OR]
 RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
@@ -26,6 +31,12 @@ Options -Indexes
 <Files ".htaccess">
     Require all denied
 </Files>
+
+# ✅ Forcer les bons types MIME pour éviter les erreurs
+<IfModule mod_mime.c>
+    AddType text/css .css
+    AddType application/javascript .js
+</IfModule>
 
 # 🏎️ ✅ Optimisation cache des fichiers statiques (Utile pour la performance)
 <IfModule mod_expires.c>
